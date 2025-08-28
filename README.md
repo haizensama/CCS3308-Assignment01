@@ -35,47 +35,41 @@ Volume "todo-app_pgdata"
 The volume called todo-app_pgdata is created through the setup in order to persist PostgreSQL data.  
 The mountpoint of the volume is (/var/lib/postgresql/data).
 
-To find the mountpoint of the volume run the command: `docker volume inspect pgdata`
+To find the mountpoint of the volume run the command: 
 
----
-
-## • Container Configuration: 
-
+```bash
+docker volume inspect pgdata
+```
+• Container Configuration:
 All the containers below are connected to the todo-net network
 
-### db (PostgreSQL)
-
-Image: postgres:15  
-container name is set to todo-db  
-The environment variables will configure the database name, user, and password.  
-There is an initialization script called init.sql to set up a scheme on the first execution.  
+db (PostgreSQL)
+Image: postgres:15
+container name is set to todo-db
+The environment variables will configure the database name, user, and password.
+There is an initialization script called init.sql to set up a scheme on the first execution.
 The restart policy is set to unless-stopped
 
-### backend (Express.js API Server)
-
-Image: node:18  
-This is built from the ./backend folder  
-container name is to todo-backend  
-The database is connected to the backend through env variables such as DB_HOST= db and DB_USER=todo_user  
-The API for the backend is exposed on port 5000  
+backend (Express.js API Server)
+Image: node:18
+This is built from the ./backend folder
+container name is to todo-backend
+The database is connected to the backend through env variables such as DB_HOST= db and DB_USER=todo_user
+The API for the backend is exposed on port 5000
 Rest endpoints are configured for CRUD /api/todos)
 
-### frontend (React + Nginx UI)
-
-Image: node:18  
-This is built from ./frontend  
+frontend (React + Nginx UI)
+Image: node:18
+This is built from ./frontend
 The frontend serves a react app through a NGINX port on 80 that is mapped to port 3000 on the host.
 
----
-
-## • Container List: 
-
-
+• Container List:
+bash
+Copy code
 CONTAINER ID   IMAGE               COMMAND                  CREATED       STATUS       PORTS                                         NAMES
 76ddf935d895   todo-app-frontend   "/docker-entrypoint.…"   2 hours ago   Up 2 hours   0.0.0.0:3000->80/tcp, [::]:3000->80/tcp       todo-frontend
 63f933d659c4   todo-app-backend    "docker-entrypoint.s…"   2 hours ago   Up 2 hours   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp   todo-backend
 8ca8454bcead   postgres:15         "docker-entrypoint.s…"   2 hours ago   Up 2 hours   5432/tcp                                      todo-db
-
 todo-db
 This container is for the database and it stores all the records in the PostgreSQL with persistence
 
@@ -92,40 +86,40 @@ Step 02: Navigate to the root folder with the web application
 
 Step 03: Run the command below to provide permissions in order to run the scripts
 
-bash
-
+```bash
 chmod +x prepare-app.sh start-app.sh stop-app.sh remove-app.sh
+```
 
 Step 04: Prepare the app
 
-bash
+```bash
 
 ./prepare-app.sh
+```
 
 Step 05: Start the app
 
-bash
+```bash
 
 ./start-app.sh
-
+```
 Step 06: Access the web application
 
-The App is available at http://http://localhost:3000
+The App is available at http://localhost:3000
 
 Step 07: Stop the application
 
-bash
+```bash
 
 ./stop-app.sh
-
+```
 Step 08: Remove resources
 
-bash
-
+```bash
 ./remove-app.sh
-
-o How to access the application via a web browser.
-The App is available at http://http://localhost:3000
+```
+• How to access the application via a web browser
+The App is available at http://localhost:3000
 
 • Example Workflow:
 Enter a task into the text box
