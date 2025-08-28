@@ -40,28 +40,38 @@ To find the mountpoint of the volume run the command:
 ```bash
 docker volume inspect pgdata
 ```
-## • Container Configuration:
-All the containers below are connected to the todo-net network
+## Container Details  
 
-db (PostgreSQL)
-Image: postgres:15
-container name is set to todo-db
-The environment variables will configure the database name, user, and password.
-There is an initialization script called init.sql to set up a scheme on the first execution.
-The restart policy is set to unless-stopped
+All the containers below are connected to the **`todo-net`** network.  
 
-backend (Express.js API Server)
-Image: node:18
-This is built from the ./backend folder
-container name is to todo-backend
-The database is connected to the backend through env variables such as DB_HOST= db and DB_USER=todo_user
-The API for the backend is exposed on port 5000
-Rest endpoints are configured for CRUD /api/todos)
+---
 
-frontend (React + Nginx UI)
-Image: node:18
-This is built from ./frontend
-The frontend serves a react app through a NGINX port on 80 that is mapped to port 3000 on the host.
+### 1. Database (PostgreSQL)  
+- **Image:** `postgres:15`  
+- **Container Name:** `todo-db`  
+- **Configuration:**  
+  - Environment variables configure the database name, user, and password.  
+  - Initialization script `init.sql` sets up the schema on first execution.  
+- **Restart Policy:** `unless-stopped`  
+
+---
+
+### 2. Backend (Express.js API Server)  
+- **Image:** `node:18` (built from `./backend` folder)  
+- **Container Name:** `todo-backend`  
+- **Configuration:**  
+  - Connects to the database using environment variables (`DB_HOST=db`, `DB_USER=todo_user`, etc.)  
+  - Exposes the API on **port 5000**  
+  - Provides REST endpoints for CRUD operations at **`/api/todos`**  
+
+---
+
+### 3. Frontend (React + Nginx UI)  
+- **Image:** `node:18` (built from `./frontend` folder)  
+- **Container Name:** `todo-frontend`  
+- **Configuration:**  
+  - Serves a React app through **Nginx**  
+  - Container runs on port **80**, mapped to **port 3000** on the host  
 
 ## • Container List
 
