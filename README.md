@@ -1,147 +1,133 @@
-# To-Do Application (Dockerized)
+# This assignment was done by 22UG2-0179
 
-This assignment was done by **22UG2-0179**
-
-This README file contains detailed instructions on how you can run this dockerized application locally on your machine or cloud device.
+This readme files contains detailed instructions on how you can run this dockerized application locally on your machine or cloud device.
 
 ---
 
-## Deployment Requirements
+## Deployment Requirements: 
 
 - Docker installed for dockerization  
 - Ubuntu as Operating System  
-- Internet connection to download dependencies  
+- Internet connection to download dependecies  
 - Git installed for cloning  
 
 ---
 
-## Application Description
+## • Application Description: 
 
 The application is a simple to-do application that is built to log tasks that the user has to complete. The UI is simple and color coded with red and green buttons to mimic general design principles.
 
-- Once the user enters a task into the text box and clicks on **Add**, it will be added onto the list.  
-- When the task is completed, it can be selected from the list and deleted.  
+Once the user enters a task into the text box and clicks on Add, it will be added onto the list.  
+When the task is completed, it can be selected from the list and deleted.
 
 ---
 
-## Network and Volume Details
+## • Network and Volume Details: 
 
-**Network Name**  
-- `todo-app_todo-net`  
-- The network is a user-defined bridge network which will allow the frontend, backend, and database to communicate with each other through their service names.  
+### Network Name-
+Network todo-app_todo-net
 
-**Volume Name**  
-- `todo-app_pgdata`  
-- The volume called `todo-app_pgdata` is created through the setup in order to persist PostgreSQL data.  
-- The mountpoint of the volume is `/var/lib/postgresql/data`.  
+The network is a user-defined bridge network which will allow the frontend, backend, and database to communicate with each other through their service names.
 
-To find the mountpoint of the volume, run the command:  
-```bash
-docker volume inspect pgdata
-Container Configuration
-All the containers below are connected to the todo-net network.
+### Volume Name-
+Volume "todo-app_pgdata"
 
-db (PostgreSQL)
-Image: postgres:15
+The volume called todo-app_pgdata is created through the setup in order to persist PostgreSQL data.  
+The mountpoint of the volume is (/var/lib/postgresql/data).
 
-Container Name: todo-db
+To find the mountpoint of the volume run the command: `docker volume inspect pgdata`
 
-Environment variables configure the database name, user, and password.
+---
 
-Initialization script init.sql sets up a schema on the first execution.
+## • Container Configuration: 
 
-Restart policy is set to unless-stopped.
+All the containers below are connected to the todo-net network
 
-backend (Express.js API Server)
-Image: node:18
+### db (PostgreSQL)
 
-Build Context: ./backend
+Image: postgres:15  
+container name is set to todo-db  
+The environment variables will configure the database name, user, and password.  
+There is an initialization script called init.sql to set up a scheme on the first execution.  
+The restart policy is set to unless-stopped
 
-Container Name: todo-backend
+### backend (Express.js API Server)
 
-Database is connected to the backend through env variables (e.g., DB_HOST=db, DB_USER=todo_user).
+Image: node:18  
+This is built from the ./backend folder  
+container name is to todo-backend  
+The database is connected to the backend through env variables such as DB_HOST= db and DB_USER=todo_user  
+The API for the backend is exposed on port 5000  
+Rest endpoints are configured for CRUD /api/todos)
 
-API for the backend is exposed on port 5000.
+### frontend (React + Nginx UI)
 
-REST endpoints are configured for CRUD (/api/todos).
+Image: node:18  
+This is built from ./frontend  
+The frontend serves a react app through a NGINX port on 80 that is mapped to port 3000 on the host.
 
-frontend (React + Nginx UI)
-Image: node:18
+---
 
-Build Context: ./frontend
+## • Container List: 
 
-Container Name: todo-frontend
 
-The frontend serves a React app through an NGINX port on 80, mapped to port 3000 on the host.
-
-Container List
-bash
-Copy code
 CONTAINER ID   IMAGE               COMMAND                  CREATED       STATUS       PORTS                                         NAMES
 76ddf935d895   todo-app-frontend   "/docker-entrypoint.…"   2 hours ago   Up 2 hours   0.0.0.0:3000->80/tcp, [::]:3000->80/tcp       todo-frontend
 63f933d659c4   todo-app-backend    "docker-entrypoint.s…"   2 hours ago   Up 2 hours   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp   todo-backend
 8ca8454bcead   postgres:15         "docker-entrypoint.s…"   2 hours ago   Up 2 hours   5432/tcp                                      todo-db
+
 todo-db
-This container is for the database and it stores all the records in PostgreSQL with persistence.
+This container is for the database and it stores all the records in the PostgreSQL with persistence
 
 todo-backend
-This container is for the backend and provides the REST API that manages the todos, frontend, and connections with the database.
+This container is for the backend and provides the REST API that manages the todos, frontend, and connections with the database
 
 todo-frontend
 This container is for the frontend and serves the user interface for the web application along with a connection with the backend API.
 
-Instructions
-Step 01
-First clone the repository through the link
+• Instructions:
+Step 01: First clone the repository through the link
 
-Step 02
-Navigate to the root folder with the web application
+Step 02: Navigate to the root folder with the web application
 
-Step 03
-Run the command below to provide permissions in order to run the scripts:
+Step 03: Run the command below to provide permissions in order to run the scripts
 
 bash
-Copy code
+
 chmod +x prepare-app.sh start-app.sh stop-app.sh remove-app.sh
-Step 04
-Prepare the app
+
+Step 04: Prepare the app
 
 bash
-Copy code
+
 ./prepare-app.sh
-Step 05
-Start the app
+
+Step 05: Start the app
 
 bash
-Copy code
+
 ./start-app.sh
-Step 06
-Access the web application
 
-The App is available at:
+Step 06: Access the web application
 
-arduino
-Copy code
-http://localhost:3000
-Step 07
-Stop the application
+The App is available at http://http://localhost:3000
+
+Step 07: Stop the application
 
 bash
-Copy code
+
 ./stop-app.sh
-Step 08
-Remove resources
+
+Step 08: Remove resources
 
 bash
-Copy code
-./remove-app.sh
-How to Access the Application via a Web Browser
-The App is available at:
 
-arduino
-Copy code
-http://localhost:3000
-Example Workflow
+./remove-app.sh
+
+o How to access the application via a web browser.
+The App is available at http://http://localhost:3000
+
+• Example Workflow:
 Enter a task into the text box
 
 Click on the green "Add" button
@@ -150,4 +136,4 @@ Watch as the task gets added onto the list
 
 Select the task by clicking on the check box
 
-To delete the task, click on Delete after the selection.
+To delete the task click on delete after the selection.
