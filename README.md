@@ -40,7 +40,7 @@ To find the mountpoint of the volume run the command:
 ```bash
 docker volume inspect pgdata
 ```
-• Container Configuration:
+## • Container Configuration:
 All the containers below are connected to the todo-net network
 
 db (PostgreSQL)
@@ -63,13 +63,14 @@ Image: node:18
 This is built from ./frontend
 The frontend serves a react app through a NGINX port on 80 that is mapped to port 3000 on the host.
 
-• Container List:
-bash
-Copy code
-CONTAINER ID   IMAGE               COMMAND                  CREATED       STATUS       PORTS                                         NAMES
-76ddf935d895   todo-app-frontend   "/docker-entrypoint.…"   2 hours ago   Up 2 hours   0.0.0.0:3000->80/tcp, [::]:3000->80/tcp       todo-frontend
-63f933d659c4   todo-app-backend    "docker-entrypoint.s…"   2 hours ago   Up 2 hours   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp   todo-backend
-8ca8454bcead   postgres:15         "docker-entrypoint.s…"   2 hours ago   Up 2 hours   5432/tcp                                      todo-db
+## • Container List
+
+| CONTAINER ID | IMAGE             | COMMAND                 | CREATED     | STATUS     | PORTS                                        | NAMES         |
+|--------------|------------------|-------------------------|-------------|------------|----------------------------------------------|---------------|
+| 76ddf935d895 | todo-app-frontend | "/docker-entrypoint.…" | 2 hours ago | Up 2 hours | 0.0.0.0:3000->80/tcp, [::]:3000->80/tcp      | todo-frontend |
+| 63f933d659c4 | todo-app-backend  | "docker-entrypoint.s…" | 2 hours ago | Up 2 hours | 0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp  | todo-backend  |
+| 8ca8454bcead | postgres:15       | "docker-entrypoint.s…" | 2 hours ago | Up 2 hours | 5432/tcp                                     | todo-db       |
+
 todo-db
 This container is for the database and it stores all the records in the PostgreSQL with persistence
 
@@ -79,7 +80,8 @@ This container is for the backend and provides the REST API that manages the tod
 todo-frontend
 This container is for the frontend and serves the user interface for the web application along with a connection with the backend API.
 
-• Instructions:
+### • Instructions:
+
 Step 01: First clone the repository through the link
 
 Step 02: Navigate to the root folder with the web application
@@ -121,7 +123,7 @@ Step 08: Remove resources
 • How to access the application via a web browser
 The App is available at http://localhost:3000
 
-• Example Workflow:
+## • Example Workflow:
 Enter a task into the text box
 
 Click on the green "Add" button
